@@ -1,17 +1,49 @@
-// eslint-disable-next-line no-unused-vars
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
-export function usePhysics() {
-  const updatePosition = (object) => {
-    object.x += object.vx;
-    object.y += object.vy;
+export function usePhysics(canvas) {
+  const particles = ref([]);
 
-    if (object.x < 0 || object.x > window.innerWidth) {
-      object.vx += -1;
-    }
-    if (object.y < 0 || object.y > window.innerHeight) {
-      object.vy += -1;
-    }
+  const createParticle = (x, y) => {
+    return {
+      x,
+      y,
+      size: Math.random() * 5 + 2,
+      speed: Math.random() * 2 + 1,
+    };
   };
-  return { updatePosition };
+
+  const addParticle = (event) => {
+    const rect = canvas.value.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    particles.value.push(createParticle(x, y));
+  };
+
+  const updateParticles = () => {
+    particles.value.forEach((particle) => {
+      particle.y += particle.speed;
+      if (particle.y > canvas.value.height) {
+        particle.y = canvas.value.height;
+      }
+    });
+  };
+
+  const drawParticles = (context) => {
+    particles.value.forEach((particle) => {
+      context.fillStyle = "gold";
+      context.beginPath();
+      context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      context.fill();
+    });
+  };
+
+  onMounted(() => {
+    canvas.value.addEventListener("click", addParticle);
+  });
+
+  onUnmounted(() => {
+    canvas.value.removeEventListener("click", addParticle);
+  });
+
+  return { particles, updateParticles, drawParticles };
 }

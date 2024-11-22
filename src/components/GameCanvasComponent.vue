@@ -3,19 +3,35 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
+import { ref, onMounted } from "vue";
+import { usePhysics } from "@/composables/usePhysics";
+
 export default {
   mounted() {
     this.setupCanvas();
+    this.animate();
   },
   methods: {
     setupCanvas() {
       const canvas = this.$refs.canvas;
-      const context = canvas.getContext("2d");
+      this.context = canvas.getContext("2d");
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
-      context.fillStyle = "lightblue";
-      context.fillRect(0, 0, canvas.width, canvas.height);
+      this.physics = usePhysics(this.$refs.canvas);
+    },
+    animate() {
+      requestAnimationFrame(this.animate);
+      this.context.clearRect(
+        0,
+        0,
+        this.context.canvas.width,
+        this.context.canvas.height
+      );
+
+      this.physics.updateParticles();
+      this.physics.drawParticles(this.context);
     },
   },
 };
