@@ -13,6 +13,14 @@ export default {
     GameCanvas,
     DefaultLayout,
   },
+  data() {
+    return { selectedMaterial: "Sand" };
+  },
+  methods: {
+    updateSelectedMaterial(material) {
+      this.selectedMaterial = material;
+    },
+  },
 };
 </script>
 
