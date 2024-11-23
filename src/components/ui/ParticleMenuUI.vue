@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="menu-container max-w-md mx-auto p-4 bg-white rounded-lg shadow-lg"
-  >
+  <div class="menu-container p-4 bg-white rounded-lg shadow-lg">
     <h2 class="text-2xl font-semibold text-center mb-4">Elements:</h2>
     <ul class="space-y-2 list-none">
       <li
@@ -43,4 +41,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.menu-container img {
+  width: 48px;
+  height: auto;
+}
+</style>

@@ -2,7 +2,7 @@
   <div class="fixed top-4 right-4 z-50">
     <div class="menu-container max-w-xs p-4 bg-white rounded-lg shadow-lg">
       <h2 class="text-xl font-semibold text-center mb-2">Game Menu</h2>
-      <div class="grid grid-cols-1 gap-2">
+      <div class="grid grid-cols-3 gap-2">
         <ParticleMenu />
         <CharactersMenu />
         <TasksMenu />
@@ -25,4 +25,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.menu-container img {
+  width: 100%;
+  height: auto;
+}
+</style>
